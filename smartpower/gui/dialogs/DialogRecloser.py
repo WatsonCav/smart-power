@@ -11,6 +11,14 @@ from PySide import QtCore, QtGui
 import sys
 from Cadastro import CadastroDialog
 
+class sceneRecloserDialog(QtGui.QGraphicsScene):
+    def __init__ (self, rect):
+        super(sceneRecloserDialog, self).__init__(rect)
+        
+
+                pass
+
+
 class RecloserDialog(QtGui.QWidget):
 
     def __init__(self, item):
@@ -25,7 +33,7 @@ class RecloserDialog(QtGui.QWidget):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         #Dialog.resize(380, 210)
-        sc = 10.0
+        sc = 11.0
         Dialog.resize(380, 40+33*sc)
         #Define o tamanho da caixa dialogo
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
@@ -117,13 +125,12 @@ class RecloserDialog(QtGui.QWidget):
         self.tipoElementoCheck.addButton(QtGui.QCheckBox(u"Religador",self.formLayoutWidget), 3)
         self.tipoElementoCheck.addButton(QtGui.QCheckBox(u"Rel. e TC/TP",self.formLayoutWidget), 4)
         self.tipoElementoCheck.setExclusive(True)
+        self.tipoElementoCheck.buttons()[self.item.chave.tipo].setChecked(True)
 
         for item in self.tipoElementoCheck.buttons():
             item.setObjectName("tipoElementoCheck"+str(self.tipoElementoCheck.id(item)))
             self.formLayout.setWidget((4+self.tipoElementoCheck.id(item)), QtGui.QFormLayout.FieldRole, item)
-            #self.setElementTitle().connect(item.clicked)
-            #item.toggled(True).connect(self.setElementTitle())
-        self.tipoElementoCheck.button(self.item.chave.tipo).setChecked(True)
+        self.tipoElementoCheck.buttonClicked[int].connect(self.setElementTitle)
 
         lista_comp = [int(self.capacidadeDeInterrupOLineEdit.text()), int(self.correnteNominalLineEdit.text()), int(self.nDeSequNciasDeReligamentoLineEdit.text())]
         print lista_comp
@@ -136,11 +143,14 @@ class RecloserDialog(QtGui.QWidget):
         if self.identificaOLineEdit.placeholderText() != "":
             self.buttonBox.buttons()[0].setEnabled(True)
 
-
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+        self.elementScene = QtGui.QGraphicsScene( 0, 0, 75, 75)
+        self.elementView = QtGui.QGraphicsView(self.elementScene)
+        self.formLayout.setWidget(5, QtGui.QFormLayout.LabelRole, self.elementView)
 
     def en_dis_button(self):
 
@@ -153,7 +163,9 @@ class RecloserDialog(QtGui.QWidget):
     def setElementTitle(self):
         for item in self.tipoElementoCheck.buttons():
             if item.isChecked():
-                self.elementTitle = item.text()
+                self.elementTitle = str(item.text())
+                print item.text()
+                print self.elementTitle
         self.retranslateUi(self.dialog)
 
 
@@ -200,7 +212,8 @@ class RecloserDialog(QtGui.QWidget):
     def retranslateUi(self, Dialog):
 
         #Tradução dos nomes dados aos objetos para os nomes gráficos do programa
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", self.elementTitle+" - Propriedades", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", self.elementTitle + " - Propriedades", None, QtGui.QApplication.UnicodeUTF8))
+        print "ok"
         self.identificaOLabel.setText(QtGui.QApplication.translate("Dialog", "Identificação:", None, QtGui.QApplication.UnicodeUTF8))
         self.correnteNominalLabel.setText(QtGui.QApplication.translate("Dialog", "Corrente Nominal (A): ", None, QtGui.QApplication.UnicodeUTF8))
         self.capacidadeDeInterrupOLabel.setText(QtGui.QApplication.translate("Dialog", "Capacidade de Interrupção (kA):", None, QtGui.QApplication.UnicodeUTF8))
