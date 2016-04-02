@@ -126,7 +126,7 @@ class JanelaPrincipal(object):
         self.iconRecloser = QtGui.QIcon("icones/iconRecloser.png")
         self.iconLine = QtGui.QIcon("icones/iconLine.png")
         self.iconNode = QtGui.QIcon("icones/iconNode.png")
-        self.icontam = QtCore.QSize(90,90)
+        self.icontam = QtCore.QSize(30,30)
         self.substationButton = QtGui.QToolButton(self.page_1)
         self.substationButton.setIcon(self.iconSubstation)
         self.substationButton.setIconSize(self.icontam)
@@ -171,42 +171,44 @@ class JanelaPrincipal(object):
 
         # define labels da primeira pagina do dockWidget
         self.substationLabel = QtGui.QLabel('')
-        self.substationLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.substationLabel.setAlignment(QtCore.Qt.AlignVCenter)
         self.substationLabel.setSizePolicy(
             QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.substationLabel.setObjectName("substationLabel")
         self.recloserLabel = QtGui.QLabel('')
-        self.recloserLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.recloserLabel.setAlignment(QtCore.Qt.AlignVCenter)
         self.recloserLabel.setSizePolicy(
             QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.recloserLabel.setObjectName("recloserLabel")
         self.busLabel = QtGui.QLabel('')
-        self.busLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.busLabel.setAlignment(QtCore.Qt.AlignVCenter)
         self.busLabel.setSizePolicy(
             QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.busLabel.setObjectName("busLabel")
         self.lineLabel = QtGui.QLabel('')
-        self.lineLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.lineLabel.setAlignment(QtCore.Qt.AlignVCenter)
         self.lineLabel.setSizePolicy(
             QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.lineLabel.setObjectName("lineLabel")
         self.noLabel = QtGui.QLabel('')
-        self.noLabel.setAlignment(QtCore.Qt.AlignHCenter)
+        self.noLabel.setAlignment(QtCore.Qt.AlignVCenter)
         self.noLabel.setSizePolicy(
             QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.noLabel.setObjectName("noLabel")
 
         # adiciona os botoes ao gridLayout_3
         self.gridlayout_page_1.addWidget(self.substationButton, 0, 0)
-        self.gridlayout_page_1.addWidget(self.recloserButton, 0, 1)
-        self.gridlayout_page_1.addWidget(self.substationLabel, 1, 0)
+        self.gridlayout_page_1.addWidget(self.recloserButton, 1, 0)
+        self.gridlayout_page_1.addWidget(self.substationLabel, 0, 1)
         self.gridlayout_page_1.addWidget(self.recloserLabel, 1, 1)
         self.gridlayout_page_1.addWidget(self.busButton, 2, 0)
-        self.gridlayout_page_1.addWidget(self.lineButton, 2, 1)
-        self.gridlayout_page_1.addWidget(self.busLabel, 3, 0)
+        self.gridlayout_page_1.addWidget(self.lineButton, 3, 0)
+        self.gridlayout_page_1.addWidget(self.busLabel, 2, 1)
         self.gridlayout_page_1.addWidget(self.lineLabel, 3, 1)
         self.gridlayout_page_1.addWidget(self.noButton, 4, 0)
-        self.gridlayout_page_1.addWidget(self.noLabel, 5, 0) 
+        self.gridlayout_page_1.addWidget(self.noLabel, 4, 1)
+
+        #self.gridlayout_page_1.setColumnAlignment(1, QtCore.Qt.AlignVCenter)
 
         # adiciona o gridLayout_3 a pagina_1 do dockWidget
         self.page_1.setLayout(self.gridlayout_page_1)
@@ -505,12 +507,12 @@ class JanelaPrincipal(object):
         self.toolBox.setItemText(
             self.toolBox.indexOf(self.page_1),
             QtGui.QApplication.translate(
-                "main_window", "Pagina 1", None,
+                "main_window", "Dispositivos", None,
                 QtGui.QApplication.UnicodeUTF8))
 
         self.toolBox.setItemText(
             self.toolBox.indexOf(self.page_2), QtGui.QApplication.translate(
-                "main_window", "Pagina 2", None,
+                "main_window", "Mais...", None,
                 QtGui.QApplication.UnicodeUTF8))
 
         self.actionExit.setText(
